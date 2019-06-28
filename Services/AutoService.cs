@@ -68,5 +68,23 @@ namespace CarApiClient.Services
             return response.StatusCode == HttpStatusCode.OK;
         }
 
+
+        public async Task<bool> UpdateCarAsync(Auto auto)
+        {
+            var request = WebRequest.Create($"{API_URL}/{auto.Id}") as HttpWebRequest;
+            request.ContentType = "application/json";
+            request.Method = "PUT";
+
+            var sendStream = await request.GetRequestStreamAsync();
+            string json = JsonConvert.SerializeObject(auto);
+
+            byte[] data = Encoding.UTF8.GetBytes(json);
+            await sendStream.WriteAsync(data, 0, data.Length);
+
+            var response = await request.GetResponseAsync() as HttpWebResponse;
+
+            return response.StatusCode == HttpStatusCode.NoContent;
+        }
+
     }
 }

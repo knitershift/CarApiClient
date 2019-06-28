@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -41,6 +42,10 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.buttonDelete = new System.Windows.Forms.Button();
+            this.buttonUpdate = new System.Windows.Forms.Button();
+            this.pictureBoxLoading = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -124,12 +129,17 @@
             this.columnHeader1,
             this.columnHeader2,
             this.columnHeader3});
+            this.listViewAutos.FullRowSelect = true;
+            this.listViewAutos.GridLines = true;
             this.listViewAutos.Location = new System.Drawing.Point(24, 120);
+            this.listViewAutos.MultiSelect = false;
             this.listViewAutos.Name = "listViewAutos";
             this.listViewAutos.Size = new System.Drawing.Size(513, 326);
             this.listViewAutos.TabIndex = 3;
             this.listViewAutos.UseCompatibleStateImageBehavior = false;
             this.listViewAutos.View = System.Windows.Forms.View.Details;
+            this.listViewAutos.ItemActivate += new System.EventHandler(this.ListViewAutos_ItemActivate);
+            this.listViewAutos.SelectedIndexChanged += new System.EventHandler(this.ListViewAutos_SelectedIndexChanged);
             // 
             // ColumnId
             // 
@@ -138,7 +148,7 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "Name";
-            this.columnHeader1.Width = 260;
+            this.columnHeader1.Width = 249;
             // 
             // columnHeader2
             // 
@@ -150,12 +160,51 @@
             this.columnHeader3.Text = "Color";
             this.columnHeader3.Width = 112;
             // 
+            // buttonDelete
+            // 
+            this.buttonDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.buttonDelete.Location = new System.Drawing.Point(441, 452);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(96, 29);
+            this.buttonDelete.TabIndex = 2;
+            this.buttonDelete.Text = "Delete";
+            this.buttonDelete.UseVisualStyleBackColor = false;
+            this.buttonDelete.Click += new System.EventHandler(this.ButtonDelete_Click);
+            // 
+            // buttonUpdate
+            // 
+            this.buttonUpdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.buttonUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonUpdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
+            this.buttonUpdate.Location = new System.Drawing.Point(339, 452);
+            this.buttonUpdate.Name = "buttonUpdate";
+            this.buttonUpdate.Size = new System.Drawing.Size(96, 29);
+            this.buttonUpdate.TabIndex = 2;
+            this.buttonUpdate.Text = "Update";
+            this.buttonUpdate.UseVisualStyleBackColor = false;
+            this.buttonUpdate.Click += new System.EventHandler(this.ButtonUpdate_Click);
+            // 
+            // pictureBoxLoading
+            // 
+            this.pictureBoxLoading.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxLoading.Image")));
+            this.pictureBoxLoading.Location = new System.Drawing.Point(186, 188);
+            this.pictureBoxLoading.Name = "pictureBoxLoading";
+            this.pictureBoxLoading.Size = new System.Drawing.Size(166, 146);
+            this.pictureBoxLoading.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxLoading.TabIndex = 4;
+            this.pictureBoxLoading.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(564, 471);
+            this.ClientSize = new System.Drawing.Size(564, 490);
+            this.Controls.Add(this.pictureBoxLoading);
             this.Controls.Add(this.listViewAutos);
+            this.Controls.Add(this.buttonUpdate);
+            this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.buttonCreate);
             this.Controls.Add(this.textBoxColor);
             this.Controls.Add(this.label4);
@@ -166,6 +215,7 @@
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLoading)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,6 +236,9 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.Button buttonUpdate;
+        private System.Windows.Forms.PictureBox pictureBoxLoading;
     }
 }
 
