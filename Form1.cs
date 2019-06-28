@@ -23,6 +23,12 @@ namespace CarApiClient
         {
             InitializeComponent();
             autoService = new AutoService();
+
+            Task.Run(async() =>
+            {
+                List<Auto> autos = await autoService.GetAll();
+                autos.ForEach(a => AddAutoToList(a));
+            });
         }
 
         private async void ButtonCreate_Click(object sender, EventArgs e)
@@ -54,7 +60,7 @@ namespace CarApiClient
             item.SubItems.Add(auto.Price.ToString());
             item.SubItems.Add(auto.Color);
 
-            listViewAutos.Items.Add(item);
+            this.Invoke(new MethodInvoker(() => listViewAutos.Items.Add(item) ));
         }
     }
 }

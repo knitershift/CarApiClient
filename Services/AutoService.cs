@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,7 +37,36 @@ namespace CarApiClient.Services
             }
 
             return null;
-        } 
+        }
+
+
+        public async Task<List<Auto>> GetAll()
+        {
+            var request = WebRequest.Create(API_URL) as HttpWebRequest;
+            request.ContentType = "application/json";
+            request.Method = "GET";
+
+            var response = await request.GetResponseAsync() as HttpWebResponse;
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                string result = await new StreamReader(response.GetResponseStream()).ReadToEndAsync();
+                return JsonConvert.DeserializeObject<List<Auto>>(result);
+            }
+
+            return null;
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var request = WebRequest.Create($"{API_URL}/{id}") as HttpWebRequest;
+            request.ContentType = "application/json";
+            request.Method = "DELETE";
+
+            var response = await request.GetResponseAsync() as HttpWebResponse;
+
+            return response.StatusCode == HttpStatusCode.OK;
+        }
 
     }
 }
