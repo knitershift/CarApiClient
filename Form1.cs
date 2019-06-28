@@ -1,4 +1,5 @@
 ﻿using CarApiClient.Models;
+using CarApiClient.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,31 +17,44 @@ namespace CarApiClient
 {
     public partial class Form1 : Form
     {
-        public const string API_URL = "http://localhost:49890/api/autos";
+        private AutoService autoService { get; set; }
 
         public Form1()
         {
             InitializeComponent();
+            autoService = new AutoService();
+        }
 
-            var request = WebRequest.Create(API_URL) as HttpWebRequest;
-            request.ContentType = "application/json";
-            request.Method = "POST";
+        private async void ButtonCreate_Click(object sender, EventArgs e)
+        {
+            string name = textBoxName.Text;
+            int price = Convert.ToInt32(textBoxPrice.Text);
+            string color = textBoxColor.Text;
 
-            var sendStream = request.GetRequestStream();
+            if (name == "" || color == "")
+            {
+                MessageBox.Show("Fill data");
+                return;
+            }
 
-            var auto = new Auto { Name = "Mercedes", Price = 15555, Color = "Gray" };
-            string json = JsonConvert.SerializeObject(auto);
 
-            byte[]data = Encoding.UTF8.GetBytes(json);
-            sendStream.Write(data, 0, data.Length);
+           Auto auto = await autoService.CreateAuto(new Auto { Name = name, Price = price, Color = color });
 
-            var response = request.GetResponse() as HttpWebResponse;
+            if (auto != null)
+            {
+                AddAutoToList(auto);
+            }
+        }
 
-            string result = new StreamReader(response.GetResponseStream()).ReadToEnd();
+        void AddAutoToList(Auto auto)
+        {
+            var item = new ListViewItem(auto.Id.ToString());
 
-            Auto createdAuto = JsonConvert.DeserializeObject<Auto>(result);
+            item.SubItems.Add(auto.Name);
+            item.SubItems.Add(auto.Price.ToString());
+            item.SubItems.Add(auto.Color);
 
-            MessageBox.Show($"Auto id = {createdAuto.Id}");
+            listViewAutos.Items.Add(item);
         }
     }
 }
